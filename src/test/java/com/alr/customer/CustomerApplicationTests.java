@@ -4,6 +4,7 @@ import com.alr.customer.application.actions.CustomerAction;
 import com.alr.customer.domain.contracts.CustomerService;
 import com.alr.customer.domain.entities.Customer;
 import com.alr.customer.infrastructure.controllers.CustomerController;
+import com.alr.customer.infrastructure.controllers.DocumentationController;
 import com.alr.customer.infrastructure.repositories.CustomerRepository;
 import com.alr.customer.infrastructure.requests.CustomerDTO;
 import org.junit.jupiter.api.Assertions;
@@ -31,6 +32,9 @@ class CustomerApplicationTests {
   @Autowired
   private Function<CustomerDTO, Customer> customerMapper;
 
+  @Autowired
+  private DocumentationController documentationController;
+
   @Test
   void contextLoads() {
     Assertions.assertNotNull(customerController);
@@ -38,5 +42,6 @@ class CustomerApplicationTests {
     Assertions.assertNotNull(customerService);
     Assertions.assertNotNull(customerRepository);
     Assertions.assertNotNull(customerMapper);
+    Assertions.assertNotNull(documentationController);
   }
 }
