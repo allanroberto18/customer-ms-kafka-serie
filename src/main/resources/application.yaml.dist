@@ -33,7 +33,7 @@ spring:
 
   flyway:
     enabled: true
-    schemas: customer_db
+    schemas: ${MYSQL_DATABASE}
     url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?useSSL=false
     user: ${MYSQL_USER}
     password: ${MYSQL_PASSWORD}
