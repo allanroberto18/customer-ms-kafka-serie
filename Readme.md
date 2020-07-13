@@ -1,4 +1,4 @@
-## Micro Services with Kafka (Customer Micro Service - Part 2 of 4)
+## Micro Services with Kafka (Customer Micro Service - Part 2 of 5)
 
 ### Description
 
