@@ -24,7 +24,6 @@ public class CustomerRepositoryTest {
   @BeforeEach
   void setUp() {
     Customer customerExpected = Customer.builder()
-        .id(1)
         .name("user 1")
         .email("user1@test.com")
         .build();
