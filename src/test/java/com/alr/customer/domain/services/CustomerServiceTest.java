@@ -56,9 +56,7 @@ public class CustomerServiceTest {
 
     Customer customer = customerService.save(customerDTO);
 
-    Assertions.assertNotNull(customer);
-    Assertions.assertEquals(expectedEmail, customer.getEmail());
-    Assertions.assertEquals(expectedName, customer.getName());
+    makeAssertions(customerExpected, customer);
   }
 
   @Test
@@ -75,9 +73,7 @@ public class CustomerServiceTest {
 
     Customer customer = customerService.save(id, customerDTO);
 
-    Assertions.assertNotNull(customer);
-    Assertions.assertEquals(expectedEmail, customer.getEmail());
-    Assertions.assertEquals(expectedName, customer.getName());
+    makeAssertions(customerExpected, customer);
   }
 
   @Test
@@ -95,9 +91,7 @@ public class CustomerServiceTest {
 
     Customer customer = customerService.save(id, customerDTO);
 
-    Assertions.assertNotNull(customer);
-    Assertions.assertEquals(expectedEmail, customer.getEmail());
-    Assertions.assertEquals(expectedName, customer.getName());
+    makeAssertions(customerExpected, customer);
   }
 
   @Test
@@ -112,14 +106,11 @@ public class CustomerServiceTest {
 
     Optional<Customer> customer = customerService.find(id);
 
-    Assertions.assertTrue(customer.isPresent());
-    Assertions.assertEquals(id, customer.get().getId());
-    Assertions.assertEquals(expectedName, customer.get().getName());
-    Assertions.assertEquals(expectedEmail, customer.get().getEmail());
+    makeAssertions(customerExpected, customer);
   }
 
   @Test
-  public void find_WithInvalidId_MustReturnACustomer() {
+  public void find_WithInvalidId_MustReturnEmpty() {
     Integer id = 1;
 
     Mockito.when(customerRepository.findById(id)).thenReturn(Optional.empty());
@@ -130,7 +121,7 @@ public class CustomerServiceTest {
   }
 
   @Test
-  public void all_NoArgumentes_ReturnListOfCustomer() {
+  public void all_NoArguments_ReturnListOfCustomer() {
     Integer id = 1;
     String name = "User Test";
     String email = "user_test@test.com";
@@ -145,6 +136,17 @@ public class CustomerServiceTest {
     Assertions.assertEquals(customersExpected.size(), customers.size());
   }
 
+  private void makeAssertions(Customer customerExpected, Optional<Customer> customer) {
+    Assertions.assertTrue(customer.isPresent());
+
+    makeAssertions(customerExpected, customer.get());
+  }
+
+  private void makeAssertions(Customer customerExpected, Customer customer) {
+    Assertions.assertEquals(customerExpected.getName(), customer.getName());
+    Assertions.assertEquals(customerExpected.getEmail(), customer.getEmail());
+  }
+
   private CustomerDTO getCustomerDTO(String expectedName, String expectedEmail) {
     return CustomerDTO.builder()
         .name(expectedName)
@@ -153,11 +155,7 @@ public class CustomerServiceTest {
   }
 
   private Customer getCustomer(Integer id, String expectedName, String expectedEmail) {
-    Customer customer = Customer.builder()
-        .name(expectedName)
-        .email(expectedEmail)
-        .build();
-
+    Customer customer = getCustomer(expectedName, expectedEmail);
     customer.setId(id);
 
     return customer;
